@@ -143,10 +143,10 @@ jobs:
           keys: [frontend-build]
       - run:
           name: scan front-end
-          
-            
-            
-      
+          command: |
+            cd frontend
+            npm install
+            npm audit fix --audit-level=critical --force
 
   scan-backend:
     docker:
@@ -157,6 +157,10 @@ jobs:
           keys: [backend-build]
       - run:
           name: Back-end scan
+          command: |
+            cd backend
+            npm install
+            npm audit fix --audit-level=critical --force
           
             
             

@@ -145,7 +145,7 @@ jobs:
           name: scan front-end
           command: |
             cd frontend
-            npm install
+            
             
       
 
@@ -160,7 +160,7 @@ jobs:
           name: Back-end scan
           command: |
             cd backend
-            npm install
+            
             
 
   deploy-infrastructure:

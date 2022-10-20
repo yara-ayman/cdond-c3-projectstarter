@@ -98,7 +98,7 @@ jobs:
                 }
               ]
             }
-          - event: always
+           event: always
 
 
   build-frontend:
@@ -570,7 +570,6 @@ jobs:
 
 workflows:
   default:
-  send-notification:
     jobs:
       - notify:
           context: slack-secrets

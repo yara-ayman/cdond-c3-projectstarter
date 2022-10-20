@@ -77,7 +77,7 @@ commands:
 
 
 jobs:
-##try not
+###try not
   notify:
     docker:
       - image: 'cimg/base:stable'

@@ -571,8 +571,8 @@ jobs:
 workflows:
   send-notification:
     jobs:
-      #- notify:
-       #   context: slack-secrets
+      - notify:
+          context: slack-secrets
       - build-frontend
       - build-backend
       - test-frontend:

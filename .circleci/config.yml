@@ -571,8 +571,6 @@ jobs:
 workflows:
   default:
     jobs:
-      #- notify:
-       #   context: slack-secrets
       - build-frontend
       - build-backend
       - test-frontend:
@@ -584,22 +582,23 @@ workflows:
       - scan-frontend:
           requires: [build-frontend]
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]    
+          filters:
+            branches:
+              only:
+                - master
       - configure-infrastructure:
-          requires: [deploy-infrastructure]
+          requires:
+            - deploy-infrastructure
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
           requires: [run-migrations]
       - deploy-backend:
-          requires: [run-migrations]
-      #- smoke-test:
-       #   requires: [deploy-backend, deploy-frontend]
-      #- cloudfront-update:
-       #   requires: [smoke-test]
+          requires: [run-migrations]   
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend] 
       - cloudfront-update:
-          requires: [deploy-backend, deploy-frontend]
-      #- cleanup:
-       #   requires: [cloudfront-update]
-
-          ##
+          requires: [smoke-test]  
+      - cleanup:
+          requires: [cloudfront-update]

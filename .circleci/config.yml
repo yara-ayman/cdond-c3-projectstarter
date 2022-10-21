@@ -569,10 +569,10 @@ jobs:
 
 
 workflows:
-  send-notification:
+  default:
     jobs:
-      - notify:
-          context: slack-secrets
+      #- notify:
+       #   context: slack-secrets
       - build-frontend
       - build-backend
       - test-frontend:

@@ -269,7 +269,7 @@ jobs:
       - image: circleci/node
     steps:
        #Checkout code from git  
-       - checkout
+      - checkout
       - restore_cache:
            keys:
              - backend-build
@@ -302,12 +302,9 @@ jobs:
                  curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '0' -k
              fi
       #  Here's where you will add some code to rollback on failure      
-       - destroy-environment:
+      - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail
-       - revert-migrations:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail  
+          when: on_fail    
 
   deploy-frontend:
     docker:

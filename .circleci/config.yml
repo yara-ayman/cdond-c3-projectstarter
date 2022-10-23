@@ -269,7 +269,7 @@ jobs:
       - image: circleci/node
     steps:
        #Checkout code from git  
-      - checkout
+       - checkout
       - restore_cache:
            keys:
              - backend-build
@@ -308,6 +308,7 @@ jobs:
        - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail  
+
   deploy-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -357,6 +358,7 @@ jobs:
       - revert_migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
+
   deploy-backend:
     docker:
       # Docker image heere that supports Ansible

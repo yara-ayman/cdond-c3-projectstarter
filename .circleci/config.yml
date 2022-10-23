@@ -349,10 +349,10 @@ jobs:
           paths:
             - frontend/dist      
       # Here's where you will add some code to rollback on failure      
-      - destroy_environment:
+      - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
-      - revert_migrations:
+      - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
 

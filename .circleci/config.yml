@@ -320,10 +320,10 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople" \
               --output text)
-              export API_URL="http://${BACKEND_IP}:22"
+              export API_URL="http://${BACKEND_IP}:3030"
               echo "API_URL = ${API_URL}"
               ls -lah
-              echo "API_URL=http://${BACKEND_IP}:22" >> .env
+              echo "API_URL=http://${BACKEND_IP}:3030" >> .env
               cat .env
               curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/API_URL -k  -d ${API_URL} 
        - run:

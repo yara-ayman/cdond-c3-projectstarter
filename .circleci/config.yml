@@ -175,7 +175,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["74:3b:e5:07:2a:de:b4:4c:c5:c0:5d:c8:b9:45:d9:b8"]
+          fingerprints: ["55:d1:a4:7d:d1:53:4a:8d:60:9b:73:eb:c0:13:4d:af:0c:06:4e:6c"]
       - attach_workspace:
           at: /tmp/ansible
       - run:
@@ -250,7 +250,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["74:3b:e5:07:2a:de:b4:4c:c5:c0:5d:c8:b9:45:d9:b8"]
+          fingerprints: ["55:d1:a4:7d:d1:53:4a:8d:60:9b:73:eb:c0:13:4d:af:0c:06:4e:6c"]
       - attach_workspace:
           at: .
       - run:
@@ -374,3 +374,4 @@ workflows:
       - cloudfront-update:
           requires:
             - smoke-test          
+            #

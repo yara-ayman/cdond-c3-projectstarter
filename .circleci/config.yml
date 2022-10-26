@@ -447,15 +447,15 @@ jobs:
           command: |
             # your code here
             yum install -y tar gzip curl
-      - run:
-          name: Store old OldWorkFlowID in memstash for cleanup phase
-          working_directory: ./.circleci/files
-          command: |
-            OldWorkFlowID=$(aws cloudformation \
-              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-              --no-paginate --output text)
-            echo ${OldWorkFlowID}
-            curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/WorkFlow  -d $OldWorkFlowID      
+     # - run:
+      #    name: Store old OldWorkFlowID in memstash for cleanup phase
+       #   working_directory: ./.circleci/files
+        #  command: |
+         #   OldWorkFlowID=$(aws cloudformation \
+          #    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+           #   --no-paginate --output text)
+            #echo ${OldWorkFlowID}
+            #curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/WorkFlow  -d $OldWorkFlowID      
       - run:
           name: Update cloudfront distribution
           command: |

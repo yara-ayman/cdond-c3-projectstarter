@@ -1,13 +1,5 @@
 version: 2.1
 
-
-
-      
-
-
-
-
- ######
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -236,7 +228,7 @@ jobs:
       # attach workspace
       - checkout
       - add_ssh_keys:
-          fingerprints: ["6c:7a:5a:0a:e8:21:3f:86:9c:c3:b3:3f:ad:bd:ec:18"]
+          fingerprints: ["55:d1:a4:7d:d1:53:4a:8d:60:9b:73:eb:c0:13:4d:af:0c:06:4e:6c"]
       - attach_workspace:
           at: ~/    
       - run:
@@ -304,58 +296,52 @@ jobs:
       #  Here's where you will add some code to rollback on failure      
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail    
-
+          when: on_fail  
   deploy-frontend:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - restore_cache:
+     docker:
+       - image: circleci/node:13.8.0
+     steps:
+       - checkout
+       - restore_cache:
           keys:
             - frontend-build
-      - run:
-          name: Install dependencies
-          working_directory: /tmp
-          command: |
-            sudo apt-get -y update
-            sudo apt-get -y install python3
-            sudo apt-get -y install awscli
-      - run:
-          name: Get backend url
-          command: |
-            cd frontend
-            touch .env
-            export BACKEND_IP=$(aws ec2 describe-instances \
+       - run:
+           name: Install dependencies
+           command: |
+             sudo apt-get -y update
+             sudo apt-get -y install python3
+             sudo apt-get -y install awscli
+       - run:
+           name: Get backend url
+           command: |
+             cd frontend
+             touch .env
+             export BACKEND_IP=$(aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:project,Values=udapeople" \
               --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "API_URL = ${API_URL}"
-            echo API_URL="http://${BACKEND_IP}:3030" > .env
-            cat .env
-      - run:
-          name: Deploy frontend objects
-          command: |
-            cd frontend
-            npm install
-            npm run build
-            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
-            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      
-      - persist_to_workspace:
-          root: .
-          paths:
-            - frontend/dist      
-      # Here's where you will add some code to rollback on failure      
-      - destroy-environment:
+              export API_URL="http://${BACKEND_IP}:3030"
+              echo "API_URL = ${API_URL}"
+              ls -lah
+              echo "API_URL=http://${BACKEND_IP}:3030" >> .env
+              cat .env
+              curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/API_URL -k  -d ${API_URL} 
+       - run:
+           name: Deploy frontend objects
+           command: |
+             cd frontend
+             ls -lah
+             npm run build
+             ls -lah
+             cat .env
+             ls -lah dist/
+             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive
+       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
           when: on_fail
-      - revert-migrations:
+       - revert-migrations:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail
-
+          when: on_fail 
   deploy-backend:
     docker:
       # Docker image heere that supports Ansible
@@ -366,7 +352,7 @@ jobs:
       # attach workspace
       - checkout
       - add_ssh_keys:
-          fingerprints: ["6c:7a:5a:0a:e8:21:3f:86:9c:c3:b3:3f:ad:bd:ec:18"]
+          fingerprints: ["55:d1:a4:7d:d1:53:4a:8d:60:9b:73:eb:c0:13:4d:af:0c:06:4e:6c"]
       - attach_workspace:
           at: ~/
       - run:
@@ -443,8 +429,6 @@ jobs:
                return 0
              else
                return 1
-             fi       
-            fi
              fi       
       - destroy-environment:
           id: ${CIRCLE_WORKFLOW_ID:0:7}
@@ -554,3 +538,4 @@ workflows:
           requires: [smoke-test]  
       - cleanup:
           requires: [cloudfront-update]          
+#

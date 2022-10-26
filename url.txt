@@ -1,0 +1,3 @@
+URL01="https://github.com/FahmyKhalilM/cdond-c3-projectstarter"
+URL02="http://udapeople-4cd70f8.s3-website-us-east-1.amazonaws.com/#/employees"
+URL03="http://d2y39qmmh8x148.cloudfront.net/#/employees"

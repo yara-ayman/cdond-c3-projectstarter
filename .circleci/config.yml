@@ -406,8 +406,10 @@ jobs:
             pip install awscli
       - run:
           name: Test backend url
+          #API_URL=`curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/API_URL -k   `
           command: |
-            API_URL=`curl https://kvdb.io/KbXu3VVreQ25zzytjaW1eL/API_URL -k   `
+            
+            export API_URL="http://${BACKEND_IP}:3030"
             echo ${API_URL}
             export BACKEND_ENDPOINT=${API_URL}/api/status
             echo ${BACKEND_ENDPOINT}
